@@ -14,7 +14,7 @@ struct Target {
 	int w;
 };
 
-char space[40][40], space_fog[40][40];
+char space[20][20], space_fog[20][20];
 const char wall_ch = '#', way_ch = ' ', fog_ch = '+', player_ch = '*';
 const int size_h = sizeof(space) / sizeof(space[0]) - 1,
 size_w = sizeof(space[0]) / sizeof(space[0][0]) - 1;
@@ -92,17 +92,15 @@ void generate_maze()
 	while (true) {
 		tmp = rand() % (size_h - 2) + 1;
 		if (space[tmp][1] == way_ch) {
-			entrance_x = tmp;
-			player_x = entrance_x;
-			space[entrance_x][entrance_y] = way_ch;
+			player_x = tmp;
+			space[tmp][entrance_y] = way_ch;
 			break;
 		}
 	}
 	while (true) {
 		tmp = rand() % (size_h - 2) + 1;
-		if (space[size_h - 2][tmp] == way_ch) {
-			exit_x = tmp;
-			space[exit_x][exit_y] = way_ch;
+		if (space[tmp][size_w - 2] == way_ch) {
+			space[tmp][size_w - 1] = way_ch;
 			break;
 		}
 	}
@@ -115,7 +113,7 @@ void draw()
 	for (int i = 0; i < size_h; i++)
 	{
 		for (int j = 0; j < size_w; j++)
-			cout << space_fog[i][j];
+			cout << space[i][j];
 		cout << endl;
 	}
 
@@ -195,3 +193,4 @@ int main()
 
 	return 0;
 }
+
